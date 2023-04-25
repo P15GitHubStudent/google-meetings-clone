@@ -58,11 +58,11 @@
                 @close="personInviteClicked = false"
               ></InvitePeopleMeeting>
             </q-dialog>
-
+            <!--
             <MeetingInfoBtn
               v-model="clickedOnMeetingInfo"
               :meeting-url="meetingUrl"
-            ></MeetingInfoBtn>
+            ></MeetingInfoBtn> -->
 
             <!-- modal with text + button to invite users !-->
             <q-btn-dropdown
@@ -109,11 +109,17 @@
     </q-footer>
 
     <q-drawer v-model="leftDrawerOpen" side="left">
-      <component v-bind:is="selectedComponentLeft"></component>
+      <component
+        v-bind:is="selectedComponentLeft"
+        @close="onDrawerClose('left')"
+      ></component>
     </q-drawer>
 
     <q-drawer v-model="rightDrawerOpen" side="right">
-      <component v-bind:is="selectedComponent"></component>
+      <component
+        v-bind:is="selectedComponent"
+        @close="onDrawerClose('right')"
+      ></component>
     </q-drawer>
   </q-layout>
 </template>
@@ -156,10 +162,7 @@ export default {
     };
   },
   mounted() {
-    this.$nextTick(() => {
-      // this.positionInfo = this.$refs['info']
-      // console.log(this.$refs)
-    });
+    this.$nextTick(() => {});
   },
   methods: {
     onMicrophoneInput(value) {
@@ -180,6 +183,17 @@ export default {
 
     onPersonInviteClick() {
       this.personInviteClicked = true;
+    },
+    onDrawerOpen(direction) {},
+
+    onDrawerClose(direction) {
+      if (direction === "left") {
+        this.selectedComponentLeft = null;
+        this.leftDrawerOpen = false;
+      } else {
+        this.selectedComponentRight = null;
+        this.rightDrawerOpen = false;
+      }
     },
   },
   watch: {

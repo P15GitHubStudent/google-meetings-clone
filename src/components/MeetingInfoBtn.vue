@@ -52,7 +52,7 @@ export default {
   },
   methods: {
     onCloseButton() {
-      this.$emit("input", false);
+      this.$emit("close");
     },
   },
 };
@@ -70,11 +70,15 @@ export default {
 .meeting-info-card {
   word-wrap: break-word;
   white-space: pre-wrap;
-  min-width: 20rem;
+  width: 100%;
   min-height: 30rem;
   background-color: #fff;
   color: black;
   position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  overflow-x: hidden;
 }
 
 /* TODO: make the animation work  */
