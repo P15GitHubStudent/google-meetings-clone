@@ -26,7 +26,7 @@
 
     <q-footer elevated class="bg-blue-grey-8 text-white">
       <q-toolbar>
-        <div class="row justify-between full-width items-start">
+        <div class="row justify-between full-width items-center">
           <div class="toolbar-call-info row">
             <span>{{ currentDateTimeAmPm }} &nbsp; | &nbsp; </span>
             <span>{{ meetingId }}</span>
