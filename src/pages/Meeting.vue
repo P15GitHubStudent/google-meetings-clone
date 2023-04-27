@@ -28,7 +28,7 @@
       <q-toolbar>
         <div class="row justify-between full-width items-start">
           <div class="toolbar-call-info row">
-            <span>{{ formatAMPM }} &nbsp; | &nbsp; </span>
+            <span>{{ currentDateTimeAmPm }} &nbsp; | &nbsp; </span>
             <span>{{ meetingId }}</span>
           </div>
 
@@ -41,8 +41,6 @@
               :value="cameraDisabled"
               @input="onCameraInput"
             ></camera-btn>
-
-            <meeting-chat></meeting-chat>
 
             <q-btn round icon="screen_share"></q-btn>
             <q-btn round icon="more"></q-btn>
@@ -63,6 +61,8 @@
               v-model="clickedOnMeetingInfo"
               :meeting-url="meetingUrl"
             ></MeetingInfoBtn> -->
+
+            <q-btn icon="chat" @click="onClickBtnChat"></q-btn>
 
             <!-- modal with text + button to invite users !-->
             <q-btn-dropdown
@@ -99,6 +99,9 @@
                 exercitationem aut, natus minima, porro labore.
               </q-card-section>
             </q-btn-dropdown>
+
+            <!-- <meeting-chat></meeting-chat> -->
+
             <!-- End of Button to Invite Users -->
 
             <!-- <q-btn icon="people"></q-btn>
@@ -149,7 +152,7 @@ export default {
   data() {
     return {
       selectedComponentLeft: "meeting-info-btn",
-      selectedComponent: "meeting-info-btn",
+      selectedComponent: "meeting-chat",
       meetingUrl: "https://meet.google.com/wvg-wakv-abp",
       microphoneDisabled: false,
       cameraDisabled: false,
@@ -159,14 +162,24 @@ export default {
       meetingId: this.$route.params.id,
       leftDrawerOpen: false,
       rightDrawerOpen: true,
+      currentDateTimeAmPm: "",
+      dateTimeUpdateHandler: null,
     };
   },
   mounted() {
+    this.currentDateTimeAmPm = this.formatAMPM();
+    this.dateTimeUpdateHandler = setInterval(() => {
+      this.currentDateTimeAmPm = this.formatAMPM();
+    }, 1000 * 60); // update every minute
     this.$nextTick(() => {});
   },
   methods: {
     onMicrophoneInput(value) {
       this.microphoneDisabled = value;
+    },
+
+    onClickBtnChat() {
+      this.selectedComponent = "meeting-chat";
     },
 
     onCameraInput(value) {
@@ -185,6 +198,17 @@ export default {
       this.personInviteClicked = true;
     },
     onDrawerOpen(direction) {},
+
+    formatAMPM(date = new Date()) {
+      // const date = new Date();
+      let hours = date.getHours();
+      let minutes = date.getMinutes();
+      const ampm = hours >= 12 ? "PM" : "AM";
+      hours = hours % 12;
+      hours = hours ? hours : 12; // the hour '0' should be '12'
+      minutes = minutes < 10 ? "0" + minutes : minutes;
+      return hours + ":" + minutes + " " + ampm;
+    },
 
     onDrawerClose(direction) {
       if (direction === "left") {
@@ -212,18 +236,7 @@ export default {
       },
     },
   },
-  computed: {
-    formatAMPM() {
-      const date = new Date();
-      let hours = date.getHours();
-      let minutes = date.getMinutes();
-      const ampm = hours >= 12 ? "PM" : "AM";
-      hours = hours % 12;
-      hours = hours ? hours : 12; // the hour '0' should be '12'
-      minutes = minutes < 10 ? "0" + minutes : minutes;
-      return hours + ":" + minutes + " " + ampm;
-    },
-  },
+  computed: {},
 };
 </script>
 
