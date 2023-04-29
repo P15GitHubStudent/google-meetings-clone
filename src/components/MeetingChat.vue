@@ -48,23 +48,28 @@ t
           <q-icon name="schedule" />
         </template>
       </q-input> -->
-      <div class="flex position-relative">
-        <input
-          type="text"
-          class="input-chat-message"
-          placeholder="message"
-          :value="text"
-          @input="(event) => (text = event.target.value)"
-        />
-        <q-btn
-          icon="send"
-          class="send-chat-message-btn"
-          flat
-          rounded
-          v-bind="sendBtnDynamicProps"
-          @click="sendMessage"
-        ></q-btn>
-      </div>
+
+        <q-form method="post" @submit.prevent="sendMessage">
+          <div class="flex position-relative">
+          <input
+            type="text"
+            class="input-chat-message"
+            placeholder="message"
+            :value="text"
+            @input="onInputChatMessage"
+          />
+          <q-btn
+            icon="send"
+            class="send-chat-message-btn"
+            flat
+            rounded
+            v-bind="sendBtnDynamicProps"
+            @click="sendMessage"
+          ></q-btn>
+          <!-- ... -->
+            </div>
+        </q-form>
+
     </q-footer>
   </q-card>
 </template>
@@ -92,6 +97,9 @@ export default {
     };
   },
   methods: {
+    onInputChatMessage(event) {
+      this.text = event.target.value;
+    },
     onCloseButton() {
       this.$emit("close");
     },
