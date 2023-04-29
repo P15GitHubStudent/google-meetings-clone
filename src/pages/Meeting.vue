@@ -134,6 +134,7 @@ import MeetingInfoBtn from "../components/MeetingInfoBtn.vue";
 import MicrophoneBtn from "../components/MicrophoneBtn.vue";
 import CameraBtn from "../components/CameraBtn.vue";
 import MeetingChat from "../components/MeetingChat.vue";
+import handlesDates from "../mixins/handlesDates";
 
 export default {
   name: "meeting",
@@ -149,6 +150,7 @@ export default {
     CameraBtn,
     MeetingChat,
   },
+  mixins: [handlesDates],
   data() {
     return {
       selectedComponentLeft: "meeting-info-btn",
@@ -198,17 +200,6 @@ export default {
       this.personInviteClicked = true;
     },
     onDrawerOpen(direction) {},
-
-    formatAMPM(date = new Date()) {
-      // const date = new Date();
-      let hours = date.getHours();
-      let minutes = date.getMinutes();
-      const ampm = hours >= 12 ? "PM" : "AM";
-      hours = hours % 12;
-      hours = hours ? hours : 12; // the hour '0' should be '12'
-      minutes = minutes < 10 ? "0" + minutes : minutes;
-      return hours + ":" + minutes + " " + ampm;
-    },
 
     onDrawerClose(direction) {
       if (direction === "left") {

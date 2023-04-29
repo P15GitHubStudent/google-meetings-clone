@@ -49,8 +49,8 @@ t
         </template>
       </q-input> -->
 
-        <q-form method="post" @submit.prevent="sendMessage">
-          <div class="flex position-relative">
+      <q-form method="post" @submit.prevent="sendMessage">
+        <div class="flex position-relative">
           <input
             type="text"
             class="input-chat-message"
@@ -67,16 +67,18 @@ t
             @click="sendMessage"
           ></q-btn>
           <!-- ... -->
-            </div>
-        </q-form>
-
+        </div>
+      </q-form>
     </q-footer>
   </q-card>
 </template>
 
 <script>
+import handlesDates from "../mixins/handlesDates";
+
 export default {
   name: "meeting-chat",
+  mixins: [handlesDates],
   data() {
     return {
       text: "",
@@ -110,7 +112,7 @@ export default {
 
       this.messages.push({
         text: this.text,
-        from: "me",
+        from: `me - ${this.formatAMPM()}`,
       });
       this.text = "";
     },
