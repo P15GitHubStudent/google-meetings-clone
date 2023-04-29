@@ -61,7 +61,7 @@ t
           class="send-chat-message-btn"
           flat
           rounded
-          text-color="blue"
+          v-bind="sendBtnDynamicProps"
           @click="sendMessage"
         ></q-btn>
       </div>
@@ -108,6 +108,12 @@ export default {
     },
   },
   computed: {
+    sendBtnDynamicProps() {
+      return {
+        "text-color": this.text.length > 0 ? "blue" : "grey",
+        disable: this.text.length <= 0 ? true : false,
+      };
+    },
     // sendMessageBtnProps: {
     //   color: this.text.length > 0 ? "blue" : "grey ",
     // },
