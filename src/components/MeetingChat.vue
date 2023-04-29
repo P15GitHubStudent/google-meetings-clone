@@ -15,10 +15,25 @@ t
     </q-card-section>
 
     <q-card-section class="q-pa-md column col justify-end">
-      <div class="chat-message">
-        <div>Alex - 10:30AM</div>
-        <p>This is a text</p>
+      <!-- <q-list>
+        <q-item
+          v-for="(message, index) in messages"
+          :key="index"
+          class="text-black"
+        >
+          <q-item-section class="text-black">
+            <p>{{ message.from }}</p>
+            <p>{{ message.text }}</p>
+          </q-item-section>
+        </q-item>
+      </q-list> -->
+      <div v-for="(message, index) in messages" :key="index">
+        <p class="">{{ message.from }}</p>
+        <p>{{ message.text }}</p>
       </div>
+
+      <!-- <div>Alex - 10:30AM</div>
+        <p>This is a text</p> -->
     </q-card-section>
 
     <q-footer class="bg-white">
@@ -34,13 +49,20 @@ t
         </template>
       </q-input> -->
       <div class="flex position-relative">
-        <input type="text" class="input-chat-message" placeholder="message" />
+        <input
+          type="text"
+          class="input-chat-message"
+          placeholder="message"
+          :value="text"
+          @input="(event) => (text = event.target.value)"
+        />
         <q-btn
           icon="send"
           class="send-chat-message-btn"
           flat
           rounded
           text-color="blue"
+          @click="sendMessage"
         ></q-btn>
       </div>
     </q-footer>
@@ -74,11 +96,21 @@ export default {
       this.$emit("close");
     },
     sendMessage() {
+      if (this.text.length <= 0) {
+        return;
+      }
+
       this.messages.push({
-        text: this.newMessage,
+        text: this.text,
         from: "me",
       });
+      this.text = "";
     },
+  },
+  computed: {
+    // sendMessageBtnProps: {
+    //   color: this.text.length > 0 ? "blue" : "grey ",
+    // },
   },
 };
 </script>
@@ -87,7 +119,7 @@ export default {
 .send-chat-message-btn {
   position: absolute;
   top: 50%;
-  right: 0.2rem;
+  left: 85%;
   transform: translate(-50%, -50%);
 }
 
@@ -103,9 +135,7 @@ export default {
   margin: 0.9375rem;
   overflow: hidden;
   position: relative;
-  width: 90%;
-  padding-right: 2rem;
-  padding-left: 2rem;
+  width: 100%;
 }
 
 .chat-meeting {
