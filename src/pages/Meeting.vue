@@ -37,6 +37,7 @@
               :value="microphoneDisabled"
               @input="onMicrophoneInput"
             ></microphone-btn>
+
             <camera-btn
               :value="cameraDisabled"
               @input="onCameraInput"
@@ -160,7 +161,7 @@ export default {
       cameraDisabled: false,
       clickedOnMeetingInfo: false,
       personInviteClicked: false,
-      darkMode: false,
+      // darkMode: false,
       meetingId: this.$route.params.id,
       leftDrawerOpen: false,
       rightDrawerOpen: true,
@@ -172,7 +173,7 @@ export default {
     this.currentDateTimeAmPm = this.formatAMPM();
     this.dateTimeUpdateHandler = setInterval(() => {
       this.currentDateTimeAmPm = this.formatAMPM();
-    }, 1000 * 60); // update every minute
+    }, 1000 * 30); // update every half of minute
     this.$nextTick(() => {});
   },
   methods: {
@@ -181,7 +182,15 @@ export default {
     },
 
     onClickBtnChat() {
-      this.selectedComponent = "meeting-chat";
+      if (this.selectedComponent) {
+        this.selectedComponent = "meeting-chat";
+        this.rightDrawerOpen = true;
+        this.selectedComponentRight = "meeting-chat";
+      } else {
+        this.selectedComponent = null;
+        this.rightDrawerOpen = false;
+        this.selectedComponentRight = null;
+      }
     },
 
     onCameraInput(value) {

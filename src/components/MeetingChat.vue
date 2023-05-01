@@ -14,7 +14,10 @@ t
       />
     </q-card-section>
 
-    <q-card-section class="q-pa-md column col justify-end">
+    <q-card-section
+      class="q-pa-md column col justify-end"
+      style="border: 1px solid black"
+    >
       <!-- <q-list>
         <q-item
           v-for="(message, index) in messages"
@@ -27,10 +30,15 @@ t
           </q-item-section>
         </q-item>
       </q-list> -->
-      <div v-for="(message, index) in messages" :key="index">
-        <p class="">{{ message.from }}</p>
-        <p>{{ message.text }}</p>
-      </div>
+      <q-scroll-area
+        class="chat-messages-scrollarea-box"
+        ref="chat-messages-scroll-area"
+      >
+        <div v-for="(message, index) in messages" :key="index">
+          <p class="">{{ message.from }}</p>
+          <p>{{ message.text }}</p>
+        </div>
+      </q-scroll-area>
 
       <!-- <div>Alex - 10:30AM</div>
         <p>This is a text</p> -->
@@ -79,10 +87,21 @@ import handlesDates from "../mixins/handlesDates";
 export default {
   name: "meeting-chat",
   mixins: [handlesDates],
+  mounted() {
+    // this.getMessages();
+  },
+  created() {
+    this.getMessages();
+  },
   data() {
     return {
       text: "",
-      messages: [
+      messages: [],
+    };
+  },
+  methods: {
+    getMessages() {
+      this.messages = [
         {
           text: "Hey Jim, how are you?",
           from: "me",
@@ -95,10 +114,13 @@ export default {
           text: "Pretty good!",
           from: "me",
         },
-      ],
-    };
-  },
-  methods: {
+      ];
+      // for (let c = 0; c < 1000; c++) {
+      //   this.messages.push({ text: "dfdf", from: "dfdfd" });
+      // }
+      // this.messages.push({text: "dfdf", from: "dfdfd"})
+    },
+
     onInputChatMessage(event) {
       this.text = event.target.value;
     },
@@ -114,7 +136,13 @@ export default {
         text: this.text,
         from: `me - ${this.formatAMPM()}`,
       });
+
       this.text = "";
+
+      this.scrollToElement("chat-messages-scroll-area");
+
+      this.$refs["chat-messages-scroll-area"].scrollTop =
+        this.$refs["chat-messages-scroll-area"].scrollHeight;
     },
   },
   computed: {
@@ -124,9 +152,6 @@ export default {
         disable: this.text.length <= 0 ? true : false,
       };
     },
-    // sendMessageBtnProps: {
-    //   color: this.text.length > 0 ? "blue" : "grey ",
-    // },
   },
 };
 </script>
@@ -152,13 +177,16 @@ export default {
   overflow: hidden;
   position: relative;
   width: 100%;
+  padding-right: 3rem;
+  inline-size: 100%;
+  overflow-wrap: break-word;
 }
 
 .chat-meeting {
   word-wrap: break-word;
   white-space: pre-wrap;
   width: 100%;
-  min-height: 30rem;
+  height: 100%;
   background-color: #fff;
   color: black;
   position: absolute;
@@ -168,5 +196,27 @@ export default {
   overflow-x: hidden;
   padding-right: 1rem;
   padding-left: 1rem;
+}
+
+.chat-messages-scrollarea-box {
+  height: 40rem;
+}
+
+@media (min-height: 700px) {
+  .chat-messages-scrollarea-box {
+    height: 35rem;
+  }
+}
+
+@media (min-height: 1000px) {
+  .chat-messages-scrollarea-box {
+    height: 60rem;
+  }
+}
+
+@media (min-height: 1100px) {
+  .chat-messages-scrollarea-box {
+    height: 120rem;
+  }
 }
 </style>
