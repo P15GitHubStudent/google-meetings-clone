@@ -67,7 +67,7 @@
           <q-card-section class="w-50">
             <img
               style="max-height: 310px"
-              src="https://lh3.googleusercontent.com/g6WWfSMs3V0w2hhsaoc9myxQXmfO3IcRPwIsSo7nUJkNDHFb2JT4bffBiNH50_seojxYfC3AfBz8xNHd5k7tqXVsjRVvHGfJfAPx-zz8Lk7EQ0cPuA=v1-w960"
+              src="~assets/googleMeetingsLogo.png"
             />
           </q-card-section>
         </q-card>
@@ -81,6 +81,8 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   firebaseAuth,
+  firebaseDatabase,
+  fireStoreDatabase,
 } from "boot/firebase.js";
 
 export default {
@@ -93,6 +95,7 @@ export default {
   },
   methods: {
     prompt() {
+      w;
       this.$q
         .dialog({
           title: "Prompt",
@@ -108,15 +111,23 @@ export default {
           // console.log('>>>> OK, received', data)
           const auth = getAuth();
           console.log(auth);
+          fireStoreDatabase();
+          debugger;
           firebaseAuth
-            .createUserWithEmailAndPassword(auth, data, "passworHere")
-            .then(() => {
-              const user = userCredential.user;
-              console.log(user);
+            .createUserWithEmailAndPassword(auth, data, "passwordGoesHere")
+            .then((userCredential) => {
+              console.log(getAuth().currentUser.uid); // this works fine !
+              console.log(db);
+              db.ref(`users/${getAuth().currentUser.uid}`).set({
+                name: data,
+                email: data,
+                online: true,
+              });
             })
             .catch((error) => {
               console.error("ERROR !" + error.message);
             });
+
           // console.log("On OK !");
           // console.log("Data:" + data);
         })
@@ -135,6 +146,11 @@ export default {
     },
     onVideoCamClick() {
       this.videocamClicked != this.videocamClicked;
+    },
+  },
+  compute: {
+    googleMeetingsImage() {
+      return "~assets/logo.png/googleMeetingsLogo.png";
     },
   },
 };
