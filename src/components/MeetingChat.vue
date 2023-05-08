@@ -51,21 +51,24 @@ t
 
       <q-form method="post" @submit.prevent="sendMessage">
         <div class="flex position-relative">
-          <input
-            type="text"
-            class="input-chat-message"
-            placeholder="message"
-            :value="text"
-            @input="onInputChatMessage"
-          />
-          <q-btn
-            icon="send"
-            class="send-chat-message-btn"
-            flat
-            rounded
-            v-bind="sendBtnDynamicProps"
-            @click="sendMessage"
-          ></q-btn>
+          <div class="input-chat-message">
+            <textarea
+              class="input-chat-message-textbox"
+              placeholder="message"
+              :value="text"
+              @input="onInputChatMessage"
+            >
+            </textarea>
+            <q-btn
+              icon="send"
+              class="send-chat-message-btn"
+              flat
+              rounded
+              v-bind="sendBtnDynamicProps"
+              @click="sendMessage"
+            ></q-btn>
+          </div>
+
           <!-- ... -->
         </div>
       </q-form>
@@ -143,6 +146,14 @@ export default {
   outline-width: 0;
 }
 
+.input-chat-message-textbox {
+  background-color: inherit;
+  border: none;
+  outline: none;
+  resize: none;
+  padding-left: 20px;
+}
+
 .input-chat-message {
   background: rgb(241 243 244);
   border-radius: 25px;
@@ -159,6 +170,7 @@ export default {
   white-space: pre-wrap;
   width: 100%;
   min-height: 30rem;
+  height: 85vh;
   background-color: #fff;
   color: black;
   position: absolute;
