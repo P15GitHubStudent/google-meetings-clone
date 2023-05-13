@@ -1,4 +1,3 @@
-t
 <template>
   <q-card class="chat-meeting move-left-right fit">
     <q-card-section class="row items-center q-pb-none q-pl">
@@ -88,9 +87,9 @@ export default {
     };
   },
   methods: {
-    onInputChatMessage(event) {
-      this.text = event.target.value;
-    },
+    // onInputChatMessage(event) {
+    //   this.text = event.target.value;
+    // },
     onCloseButton() {
       this.$emit("close");
     },
@@ -106,6 +105,8 @@ export default {
         text: this.text,
         from: `me - ${this.formatAMPM()}`,
       })
+
+      this.text = ""
 
 
     },
@@ -204,14 +205,14 @@ export default {
   background-color: inherit;
 }
 
-.send-chat-message-btn {
+/* .send-chat-message-btn {
   position: absolute;
   top: 50%;
   left: 85%;
   transform: translate(-50%, -50%);
-}
+} */
 
-.input-chat-message:focus {
+/* .input-chat-message:focus {
   outline-width: 0;
 }
 
@@ -236,7 +237,7 @@ export default {
   width: 100%;
   padding-left: 20px;
   padding-right: 20px;
-}
+} */
 
 .chat-meeting {
   word-wrap: break-word;
@@ -246,7 +247,7 @@ export default {
   height: 85vh;
   background-color: #fff;
   color: black;
-  position: absolute;
+  /* position: absolute; */
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
