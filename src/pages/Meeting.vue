@@ -24,7 +24,7 @@
       ></div>
     </q-page-container>
 
-    <q-footer elevated class="bg-blue-grey-8 text-white">
+    <q-footer elevated class="bg-blue-grey-8 text-white z-index-tweaks">
       <q-toolbar>
         <div class="row justify-between full-width items-center">
           <div class="toolbar-call-info row">
@@ -181,7 +181,8 @@ export default {
     },
 
     onClickBtnChat() {
-      this.selectedComponent = "meeting-chat";
+      this.rightDrawerOpen = !this.rightDrawerOpen;
+      this.selectedComponentRight = this.rightDrawerOpen ? "meeting-chat" : null;
     },
 
     onCameraInput(value) {
@@ -231,4 +232,9 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.z-index-tweaks
+{
+  z-index: 10000;
+}
+</style>
