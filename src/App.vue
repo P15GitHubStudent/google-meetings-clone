@@ -8,3 +8,12 @@ export default defineComponent({
   name: 'App'
 })
 </script>
+
+<style>
+
+body
+{
+  font-size: 10px;
+}
+
+</style>

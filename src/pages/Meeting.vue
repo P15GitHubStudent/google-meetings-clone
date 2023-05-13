@@ -118,7 +118,7 @@
       ></component>
     </q-drawer>
 
-    <q-drawer v-model="rightDrawerOpen" side="right">
+    <q-drawer v-model="rightDrawerOpen" side="right" bordered>
       <component
         v-bind:is="selectedComponent"
         @close="onDrawerClose('right')"
